@@ -4,26 +4,23 @@ class ConfiguracoesPage extends StatefulWidget {
   const ConfiguracoesPage({super.key});
 
   @override
-  State<ConfiguracoesPage> createState() => _ConfiguracoesPageState();
+  ConfiguracoesPageState createState() => ConfiguracoesPageState();
 }
 
-class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
-  final TextEditingController _numeroController = TextEditingController(); // Número do WhatsApp
-  final TextEditingController _mensagemPadraoController = TextEditingController(); // Mensagem padrão
-
-  @override
-  void dispose() {
-    _numeroController.dispose();
-    _mensagemPadraoController.dispose();
-    super.dispose();
-  }
+class ConfiguracoesPageState extends State<ConfiguracoesPage> {
+  // Controladores para os campos de texto
+  final TextEditingController clienteController = TextEditingController();
+  final TextEditingController servidorController = TextEditingController();
+  final TextEditingController portaController = TextEditingController();
+  final TextEditingController bdClinicaController = TextEditingController();
+  final TextEditingController integracaoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF6084A2), // Cor de fundo da tela
       appBar: AppBar(
-        title: const Text('Configurações', style: TextStyle(color: Colors.white)),
+        title: const Text('Configurações', style: TextStyle(color: Colors.white)), // Título da página
         backgroundColor: const Color(0xFF0C4474), // Cor do AppBar
         iconTheme: const IconThemeData(color: Colors.white), // Ícones do AppBar
       ),
@@ -32,75 +29,163 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Campo para número do WhatsApp
+            // Slot: Cliente (Código)
             const Text(
-              'Número do WhatsApp:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              'Cliente (Código):',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 10), // Espaçamento
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1), // Fundo semi-transparente
+                borderRadius: BorderRadius.circular(8), // Bordas arredondadas
+              ),
+              child: TextField(
+                controller: clienteController,
+                decoration: const InputDecoration(
+                  hintText: 'Digite o código do cliente',
+                  hintStyle: TextStyle(color: Colors.white70), // Cor do texto de dica
+                  border: InputBorder.none, // Remove a borda padrão
+                  contentPadding: EdgeInsets.all(16), // Espaçamento interno
+                ),
+                style: const TextStyle(color: Colors.white), // Cor do texto digitado
+              ),
+            ),
+            const SizedBox(height: 20), // Espaçamento
+
+            // Slot: Servidor
+            const Text(
+              'Servidor:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: _numeroController,
-              decoration: InputDecoration(
-                hintText: 'Digite o número do WhatsApp...',
-                hintStyle: const TextStyle(color: Colors.white70),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.white.withOpacity(0.1),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
               ),
-              style: const TextStyle(color: Colors.white),
-              keyboardType: TextInputType.phone,
+              child: TextField(
+                controller: servidorController,
+                decoration: const InputDecoration(
+                  hintText: 'Digite o endereço do servidor',
+                  hintStyle: TextStyle(color: Colors.white70),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(16),
+                ),
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
             const SizedBox(height: 20),
-            // Campo para mensagem padrão
+
+            // Slot: Porta
             const Text(
-              'Mensagem Padrão:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              'Porta:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: _mensagemPadraoController,
-              decoration: InputDecoration(
-                hintText: 'Digite a mensagem padrão...',
-                hintStyle: const TextStyle(color: Colors.white70),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.white.withOpacity(0.1),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
               ),
-              style: const TextStyle(color: Colors.white),
-              maxLines: 5,
+              child: TextField(
+                controller: portaController,
+                decoration: const InputDecoration(
+                  hintText: 'Digite a porta',
+                  hintStyle: TextStyle(color: Colors.white70),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(16),
+                ),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Slot: BD Clínica
+            const Text(
+              'BD Clínica:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: TextField(
+                controller: bdClinicaController,
+                decoration: const InputDecoration(
+                  hintText: 'Digite o nome do banco de dados',
+                  hintStyle: TextStyle(color: Colors.white70),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(16),
+                ),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Slot: Integração
+            const Text(
+              'Integração: ',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: TextField(
+                controller: integracaoController,
+                decoration: const InputDecoration(
+                  hintText: 'Digite as informações de integração',
+                  hintStyle: TextStyle(color: Colors.white70),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(16),
+                ),
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
             const SizedBox(height: 30),
-            // Botão para salvar configurações
+
+            // Botão para salvar as configurações
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  final numero = _numeroController.text;
-                  final mensagemPadrao = _mensagemPadraoController.text;
-                  if (numero.isNotEmpty && mensagemPadrao.isNotEmpty) {
-                    print('Número salvo: $numero');
-                    print('Mensagem padrão salva: $mensagemPadrao');
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Preencha todos os campos!')),
-                    );
-                  }
+                  // Ação ao salvar as configurações
+                  salvarConfiguracoes();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0C4474),
+                  backgroundColor: Colors.green, // Cor do botão
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8), // Bordas arredondadas
                   ),
                 ),
                 child: const Text(
-                  'Salvar Configurações',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  'SALVAR',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),
@@ -108,5 +193,41 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
         ),
       ),
     );
+  }
+
+  // Função para salvar as configurações
+  void salvarConfiguracoes() {
+    // Recupera os valores dos campos de texto
+    String cliente = clienteController.text;
+    String servidor = servidorController.text;
+    String porta = portaController.text;
+    String bdClinica = bdClinicaController.text;
+    String integracao = integracaoController.text;
+
+    // Exibe os valores no console (ou salva em um banco de dados, por exemplo)
+    print('Cliente: $cliente');
+    print('Servidor: $servidor');
+    print('Porta: $porta');
+    print('BD Clínica: $bdClinica');
+    print('Integração: $integracao');
+
+    // Exibe uma mensagem de sucesso
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Configurações salvas com sucesso!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    // Limpa os controladores quando a página for fechada
+    clienteController.dispose();
+    servidorController.dispose();
+    portaController.dispose();
+    bdClinicaController.dispose();
+    integracaoController.dispose();
+    super.dispose();
   }
 }

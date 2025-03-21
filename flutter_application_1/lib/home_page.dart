@@ -28,24 +28,25 @@ class HomePageState extends State<HomePage> {
         children: [
           Row(
             children: [
-              // Sidebar
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: isSidebarOpen ? 250 : 0,
-                color: const Color(0xFF0C4474), // Cor do sidebar
-                child: isSidebarOpen
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 50), // Espaçamento no topo do menu
-                          menuButton("Mensagens", Icons.message),
-                          menuButton("Configurações", Icons.settings),
-                          menuButton("Relatórios", Icons.analytics),
-                          menuButton("Filas", Icons.queue),
-                        ],
-                      )
-                    : null,
-              ),
+              // Sidebar condicional para evitar erro de renderização
+              if (isSidebarOpen)
+                ClipRect(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    width: isSidebarOpen ? 250 : 0,
+                    color: const Color(0xFF0C4474), // Cor do sidebar
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 50), // Espaçamento no topo do menu
+                        menuButton("Mensagens", Icons.message),
+                        menuButton("Configurações", Icons.settings),
+                        menuButton("Relatórios", Icons.analytics),
+                        menuButton("Filas", Icons.queue),
+                      ],
+                    ),
+                  ),
+                ),
               // Conteúdo principal
               Expanded(
                 child: GestureDetector(
@@ -58,21 +59,21 @@ class HomePageState extends State<HomePage> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1), // Fundo semi-transparente
-                      borderRadius: BorderRadius.circular(20), // Bordas arredondadas
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    margin: const EdgeInsets.all(20), // Margem externa
-                    padding: const EdgeInsets.all(20), // Espaçamento interno
+                    margin: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/imagemmm.png', // Caminho da imagem
-                          width: 300, // Largura da imagem
-                          height: 300, // Altura da imagem
-                          fit: BoxFit.contain, // Ajuste da imagem
+                          'assets/imagemmm.png',
+                          width: 350,
+                          height: 350,
+                          fit: BoxFit.contain,
                         ),
-                        const SizedBox(height: 30), // Espaçamento
+                        const SizedBox(height: 30),
                         actionButton("Testar conexão", Icons.wifi),
                         actionButton("Enviar mensagens", Icons.send),
                         actionButton("Verificar envio de mensagens", Icons.check_circle),
@@ -86,7 +87,7 @@ class HomePageState extends State<HomePage> {
           // Botão de menu
           Positioned(
             top: 20,
-            left: 20,
+            left: 20, // Ajuste para melhorar o posicionamento
             child: IconButton(
               icon: const Icon(Icons.menu, size: 30, color: Colors.white),
               onPressed: toggleSidebar,
@@ -103,11 +104,11 @@ class HomePageState extends State<HomePage> {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white.withOpacity(0.1), // Fundo semi-transparente
+          backgroundColor: Colors.white.withOpacity(0.1),
           foregroundColor: Colors.white,
-          minimumSize: const Size(double.infinity, 50), // Altura fixa
+          minimumSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // Bordas arredondadas
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         onPressed: () {
@@ -132,15 +133,12 @@ class HomePageState extends State<HomePage> {
               MaterialPageRoute(builder: (context) => const FilasPage()),
             );
           }
-        },     
+        },
         child: Row(
           children: [
-            Icon(icon, color: Colors.white), // Ícone do botão
-            const SizedBox(width: 10), // Espaçamento entre ícone e texto
-            Text(
-              title,
-              style: const TextStyle(fontSize: 16),
-            ),
+            Icon(icon, color: Colors.white),
+            const SizedBox(width: 10),
+            Text(title, style: const TextStyle(fontSize: 16)),
           ],
         ),
       ),
@@ -150,28 +148,28 @@ class HomePageState extends State<HomePage> {
   // Função para criar botões de ação no centro
   Widget actionButton(String title, IconData icon) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8,),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF0C4474), // Cor do botão
-          foregroundColor: Colors.white,
-          minimumSize: const Size(double.infinity, 50), // Mesma altura que os botões do menu
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // Bordas arredondadas
-          ),
-          elevation: 5, // Sombra do botão
-        ),
-        onPressed: () {},
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: Colors.white), // Ícone do botão
-            const SizedBox(width: 10), // Espaçamento entre ícone e texto
-            Text(
-              title,
-              style: const TextStyle(fontSize: 16),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: SizedBox(
+        width: 290,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF0C4474),
+            foregroundColor: Colors.white,
+            minimumSize: const Size(double.infinity, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-          ],
+            elevation: 5,
+          ),
+          onPressed: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: Colors.white),
+              const SizedBox(width: 10),
+              Text(title, style: const TextStyle(fontSize: 16)),
+            ],
+          ),
         ),
       ),
     );
