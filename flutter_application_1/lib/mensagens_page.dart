@@ -14,6 +14,10 @@ class _MensagensPageState extends State<MensagensPage> {
     'Agendamento',
     'Pós Agendamento',
     'Reagendamento',
+    'Avaliação',
+    'Aniversário',
+    'Cobrança',
+    'Re-Cobrança',
   ];
 
   final TextEditingController _mensagemController = TextEditingController(); // Controlador para o campo de texto

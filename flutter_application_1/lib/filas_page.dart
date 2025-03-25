@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+// ignore: use_key_in_widget_constructors
 class FilasPage extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _FilasPageState createState() => _FilasPageState();
 }
 
@@ -29,7 +31,9 @@ class _FilasPageState extends State<FilasPage> {
 
   @override
   void dispose() {
+    // ignore: avoid_function_literals_in_foreach_calls
     _controllers.values.forEach((controller) => controller.dispose());
+    // ignore: avoid_function_literals_in_foreach_calls
     _focusNodes.values.forEach((focusNode) => focusNode.dispose());
     super.dispose();
   }
@@ -55,9 +59,9 @@ class _FilasPageState extends State<FilasPage> {
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
-                crossAxisSpacing: 4, // Menor espaço entre as colunas
-                mainAxisSpacing: 4, // Menor espaço entre as linhas
-                childAspectRatio: 12, // Caixa mais compacta
+                crossAxisSpacing: 2, // Menor espaço entre as colunas
+                mainAxisSpacing: 2, // Menor espaço entre as linhas
+                childAspectRatio: 15, // Caixa mais compacta
                 children: _controllers.keys.map((label) {
                   return GestureDetector(
                     onTap: () {
@@ -75,12 +79,12 @@ class _FilasPageState extends State<FilasPage> {
                           Expanded(
                             child: Text(
                               label,
-                              style: const TextStyle(fontSize: 12, color: Colors.white), // Texto menor
+                              style: const TextStyle(fontSize: 18, color: Colors.white), // Texto menor
                             ),
                           ),
                           const SizedBox(width: 4), // Menor espaço entre o texto e o campo de entrada
                           SizedBox(
-                            width: 45, // Caixa de texto menor
+                            width: 3, // Caixa de texto menor
                             child: TextField(
                               controller: _controllers[label],
                               focusNode: _focusNodes[label], // Associando o FocusNode ao campo de texto
