@@ -5,10 +5,10 @@ class FilasPage extends StatefulWidget {
     const FilasPage({super.key, required this.isDarkMode});
   
   @override
-  State<FilasPage> createState() => _FilasPageState();
+  State<FilasPage> createState() => FilasPageState();
 }
 
-class _FilasPageState extends State<FilasPage> {
+class FilasPageState extends State<FilasPage> {
   final Map<String, TextEditingController> _controllers = {
     'Fila Agendamento:': TextEditingController(),
     'Fila Aniversariante:': TextEditingController(),
@@ -41,7 +41,8 @@ class _FilasPageState extends State<FilasPage> {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            // Column para alinhar as caixas de mensagem uma embaixo da outra
             Expanded(
               child: ListView(
                 children: _controllers.keys.map((label) {
