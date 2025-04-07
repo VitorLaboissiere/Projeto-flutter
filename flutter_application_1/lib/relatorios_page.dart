@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
-class RelatoriosPage extends StatelessWidget {
-  const RelatoriosPage({super.key});
+class RelatoriosPage extends StatefulWidget {
+  final bool isDarkMode;
+
+  const RelatoriosPage({super.key, required this.isDarkMode});
 
   @override
+  State<RelatoriosPage> createState() => _RelatoriosPageState();
+}
+
+class _RelatoriosPageState extends State<RelatoriosPage> {
+  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF6084A2), // Cor de fundo da tela
+      backgroundColor: widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
       appBar: AppBar(
         title: const Text('Relatórios', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF0C4474), // Cor do AppBar
+        backgroundColor: widget.isDarkMode ? const Color(0xFF1A2C38) : const Color(0xFF0C4474),
         iconTheme: const IconThemeData(color: Colors.white), // Ícones do AppBar
       ),
       body: SingleChildScrollView(

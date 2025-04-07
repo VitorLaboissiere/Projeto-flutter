@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FilasPage extends StatefulWidget {
-  const FilasPage({Key? key}) : super(key: key);
-
+    final bool isDarkMode;
+    const FilasPage({super.key, required this.isDarkMode});
+  
   @override
   State<FilasPage> createState() => FilasPageState();
 }
@@ -18,43 +19,27 @@ class FilasPageState extends State<FilasPage> {
     'Fila Confirmação:': TextEditingController(),
   };
 
-  final Map<String, FocusNode> _focusNodes = {};
-
-  @override
-  void initState() {
-    super.initState();
-    for (final key in _controllers.keys) {
-      _focusNodes[key] = FocusNode();
-    }
-  }
-
-  @override
-  void dispose() {
-    for (final controller in _controllers.values) {
-      controller.dispose();
-    }
-    for (final focusNode in _focusNodes.values) {
-      focusNode.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
       appBar: AppBar(
-        title: const Text('Filas', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF0C4474),
+        title: const Text('Filas', style: TextStyle(color: Colors.white)), // Título da página
+        backgroundColor: widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
+        iconTheme: const IconThemeData(color: Colors.white), // Ícones do AppBar
       ),
-      backgroundColor: const Color(0xFF6084A2),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Configure as filas:',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 16),
             // Column para alinhar as caixas de mensagem uma embaixo da outra
@@ -62,51 +47,52 @@ class FilasPageState extends State<FilasPage> {
               child: ListView(
                 children: _controllers.keys.map((label) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    padding: const EdgeInsets.only(bottom: 20),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Rótulo da fila
                         SizedBox(
-                          width: 200, // Define o tamanho fixo para o texto
+                          width: 170,
                           child: Text(
                             label,
-                            style: const TextStyle(fontSize: 16, color: Colors.white),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 6), // Espaço entre o texto e o campo de entrada
-                        
-                        // Caixa de texto compacta
                         SizedBox(
-                          width: 35, // Define o tamanho fixo para o campo de texto
+                          width: 47,
+                          height: 40,
                           child: TextField(
                             controller: _controllers[label],
-                            focusNode: _focusNodes[label],
                             keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white.withOpacity(0.2),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6.0),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                  width: 0.5,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6.0),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                  width: 0.5,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 borderSide: const BorderSide(
                                   color: Colors.white,
                                   width: 1.0,
                                 ),
                               ),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                  width: 1.0,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                  width: 1.5,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.all(10),
                             ),
                             style: const TextStyle(color: Colors.white),
                           ),
@@ -115,23 +101,6 @@ class FilasPageState extends State<FilasPage> {
                     ),
                   );
                 }).toList(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  final filasConfig = _controllers.map((key, controller) => MapEntry(key, controller.text));
-                  print('Configurações Salvas: $filasConfig');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text('Salvar Configurações', style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
             ),
           ],
