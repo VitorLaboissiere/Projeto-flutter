@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
-  const ConfiguracoesPage({super.key});
+  final bool isDarkMode;
+
+  const ConfiguracoesPage({super.key, required this.isDarkMode});
 
   @override
-  ConfiguracoesPageState createState() => ConfiguracoesPageState();
+  State<ConfiguracoesPage> createState() => _ConfiguracoesPageState();
 }
 
-class ConfiguracoesPageState extends State<ConfiguracoesPage> {
+class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
   // Controladores para os campos de texto
   final TextEditingController clienteController = TextEditingController();
   final TextEditingController servidorController = TextEditingController();
@@ -18,10 +20,10 @@ class ConfiguracoesPageState extends State<ConfiguracoesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF6084A2), // Cor de fundo da tela
+      backgroundColor: widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
       appBar: AppBar(
         title: const Text('Configurações', style: TextStyle(color: Colors.white)), // Título da página
-        backgroundColor: const Color(0xFF0C4474), // Cor do AppBar
+        backgroundColor: widget.isDarkMode ? const Color(0xFF1A2C38) : const Color(0xFF0C4474),
         iconTheme: const IconThemeData(color: Colors.white), // Ícones do AppBar
       ),
       body: SingleChildScrollView(
@@ -41,7 +43,7 @@ class ConfiguracoesPageState extends State<ConfiguracoesPage> {
             const SizedBox(height: 10), // Espaçamento
             Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1), // Fundo semi-transparente
+                color: widget.isDarkMode ? Colors.black.withOpacity(0.3) : Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8), // Bordas arredondadas
               ),
               child: TextField(
@@ -69,7 +71,7 @@ class ConfiguracoesPageState extends State<ConfiguracoesPage> {
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: widget.isDarkMode ? Colors.black.withOpacity(0.3) : Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextField(
@@ -86,88 +88,90 @@ class ConfiguracoesPageState extends State<ConfiguracoesPage> {
             const SizedBox(height: 20),
 
             // Slot: Porta
-            const Text(
+            Text(
               'Porta:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: widget.isDarkMode ? Colors.white : const Color.fromARGB(255, 255, 255, 255), // Corrigi as cores para melhor contraste
+                  ),
+                ),
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: widget.isDarkMode ? Colors.black.withOpacity(0.3) : Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextField(
                 controller: portaController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration( // Remove const aqui para permitir cores dinâmicas
                   hintText: 'Digite a porta',
-                  hintStyle: TextStyle(color: Colors.white70),
+                  hintStyle: TextStyle(color: widget.isDarkMode ? Colors.white70 : Colors.black54),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(16),
+                  contentPadding: const EdgeInsets.all(16),
                 ),
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: widget.isDarkMode ? Colors.white : Colors.black),
               ),
             ),
             const SizedBox(height: 20),
 
+
             // Slot: BD Clínica
-            const Text(
+            Text(
               'BD Clínica:',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: widget.isDarkMode ? Colors.white : const Color.fromARGB(255, 255, 255, 255),
               ),
             ),
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: widget.isDarkMode ? Colors.black.withOpacity(0.3) : Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextField(
                 controller: bdClinicaController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Digite o nome do banco de dados',
-                  hintStyle: TextStyle(color: Colors.white70),
+                  hintStyle: TextStyle(color: widget.isDarkMode ? Colors.white70 : Colors.black54),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(16),
+                  contentPadding: const EdgeInsets.all(16),
                 ),
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: widget.isDarkMode ? Colors.white : Colors.black),
               ),
             ),
             const SizedBox(height: 20),
 
-            // Slot: Integração
-            const Text(
-              'Integração: ',
+            // Integração - agora com tema dinâmico
+            Text(
+              'Integração:',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: widget.isDarkMode ? Colors.white : const Color.fromARGB(255, 255, 255, 255),
               ),
             ),
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: widget.isDarkMode ? Colors.black.withOpacity(0.3) : Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextField(
                 controller: integracaoController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Digite as informações de integração',
-                  hintStyle: TextStyle(color: Colors.white70),
+                  hintStyle: TextStyle(color: widget.isDarkMode ? Colors.white70 : Colors.black54),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(16),
+                  contentPadding: const EdgeInsets.all(16),
                 ),
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: widget.isDarkMode ? Colors.white : Colors.black),
               ),
             ),
             const SizedBox(height: 30),
+
 
             // Botão para salvar as configurações
             Center(

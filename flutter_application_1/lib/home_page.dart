@@ -5,14 +5,15 @@ import 'relatorios_page.dart';
 import 'filas_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key}); // Remove o parâmetro isDarkMode aqui
 
   @override
-  HomePageState createState() => HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
   bool isSidebarOpen = false;
+  bool isDarkMode = false; // Estado do tema agora é gerenciado aqui
 
   void toggleSidebar() {
     setState(() {
@@ -20,10 +21,16 @@ class HomePageState extends State<HomePage> {
     });
   }
 
+  void toggleDarkMode() { // Adicionado função para alternar o tema
+    setState(() {
+      isDarkMode = !isDarkMode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF6084A2), // Cor de fundo da tela
+      backgroundColor: isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2), // Cor de fundo alterável
       body: Stack(
         children: [
           Row(
@@ -34,7 +41,7 @@ class HomePageState extends State<HomePage> {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     width: isSidebarOpen ? 250 : 0,
-                    color: const Color(0xFF0C4474), // Cor do sidebar
+                    color: isDarkMode ? const Color(0xFF1A2C38) : const Color(0xFF0C4474), // Cor do sidebar alterável
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -59,7 +66,7 @@ class HomePageState extends State<HomePage> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: isDarkMode ? Colors.black.withOpacity(0.3) : Colors.white.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     margin: const EdgeInsets.all(20),
@@ -87,10 +94,23 @@ class HomePageState extends State<HomePage> {
           // Botão de menu
           Positioned(
             top: 20,
-            left: 20, // Ajuste para melhorar o posicionamento
+            left: 20,
             child: IconButton(
               icon: const Icon(Icons.menu, size: 30, color: Colors.white),
               onPressed: toggleSidebar,
+            ),
+          ),
+          // Botão de tema (adicionado)
+          Positioned(
+            top: 20,
+            right: 20,
+            child: IconButton(
+              icon: Icon(
+                isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                size: 30,
+                color: Colors.white,
+              ),
+              onPressed: toggleDarkMode,
             ),
           ),
         ],
@@ -104,7 +124,7 @@ class HomePageState extends State<HomePage> {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white.withOpacity(0.1),
+          backgroundColor: isDarkMode ? const Color(0xFF2C3E50) : Colors.white.withOpacity(0.1),
           foregroundColor: Colors.white,
           minimumSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
@@ -115,22 +135,22 @@ class HomePageState extends State<HomePage> {
           if (title == "Mensagens") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const MensagensPage()),
+              MaterialPageRoute(builder: (context) => MensagensPage(isDarkMode: isDarkMode)),
             );
           } else if (title == "Configurações") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ConfiguracoesPage()),
+              MaterialPageRoute(builder: (context) => ConfiguracoesPage(isDarkMode: isDarkMode)),
             );
           } else if (title == "Relatórios") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const RelatoriosPage()),
+              MaterialPageRoute(builder: (context) => RelatoriosPage(isDarkMode: isDarkMode)),
             );
           } else if (title == "Filas") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>   FilasPage()),
+              MaterialPageRoute(builder: (context) => FilasPage(isDarkMode: isDarkMode)),
             );
           }
         },
@@ -150,10 +170,10 @@ class HomePageState extends State<HomePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: SizedBox(
-        width: 290,
+        width: 300,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF0C4474),
+            backgroundColor: isDarkMode ? const Color(0xFF1E3A5F) : const Color(0xFF0C4474),
             foregroundColor: Colors.white,
             minimumSize: const Size(double.infinity, 50),
             shape: RoundedRectangleBorder(
