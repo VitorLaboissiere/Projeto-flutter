@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FilasPage extends StatefulWidget {
-    final bool isDarkMode;
-    const FilasPage({super.key, required this.isDarkMode});
-  
+  final bool isDarkMode;
+  const FilasPage({super.key, required this.isDarkMode});
+
   @override
   State<FilasPage> createState() => FilasPageState();
 }
@@ -19,14 +19,30 @@ class FilasPageState extends State<FilasPage> {
     'Fila Confirmação:': TextEditingController(),
   };
 
-@override
+  // ignore: non_constant_identifier_names
+  void SalvarFilas() {
+    final filasConfig =
+        _controllers.map((key, controller) => MapEntry(key, controller.text));
+    print('Filas salvas: $filasConfig');
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Filas salvas com sucesso!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
+      backgroundColor:
+          widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
       appBar: AppBar(
-        title: const Text('Filas', style: TextStyle(color: Colors.white)), // Título da página
-        backgroundColor: widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
-        iconTheme: const IconThemeData(color: Colors.white), // Ícones do AppBar
+        title: const Text('Filas', style: TextStyle(color: Colors.white)),
+        backgroundColor:
+            widget.isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
@@ -42,7 +58,6 @@ class FilasPageState extends State<FilasPage> {
               ),
             ),
             const SizedBox(height: 16),
-            // Column para alinhar as caixas de mensagem uma embaixo da outra
             Expanded(
               child: ListView(
                 children: _controllers.keys.map((label) {
@@ -101,6 +116,23 @@ class FilasPageState extends State<FilasPage> {
                     ),
                   );
                 }).toList(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: SalvarFilas,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'Salvar Filas',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ),
           ],
