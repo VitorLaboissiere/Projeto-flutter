@@ -3,26 +3,25 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Banco de dados
+// Configurar banco de dados MySQL
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Habilitar injeção de contexto no middleware
-builder.Services.AddScoped<ApiKeyMiddleware>();
+// Registrar autorização (necessário para usar app.UseAuthorization())
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
+// Redireciona HTTP para HTTPS
 app.UseHttpsRedirection();
 
-// Adiciona validação de API Key aqui
+// Middleware de autenticação por chave de API (X-API-KEY)
 app.UseMiddleware<ApiKeyMiddleware>();
 
-// Rotas
+// Middleware de autorização (necessário apenas se estiver usando [Authorize] em endpoints)
+app.UseAuthorization();
+
+// Exemplo de rota protegida
 app.MapGet("/weatherforecast", () =>
 {
     var summaries = new[]
@@ -38,6 +37,7 @@ app.MapGet("/weatherforecast", () =>
             summaries[Random.Shared.Next(summaries.Length)]
         ))
         .ToArray();
+
     return forecast;
 })
 .WithName("GetWeatherForecast");

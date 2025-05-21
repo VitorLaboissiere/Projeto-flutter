@@ -4268,11 +4268,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\projeto_flutter\\ApiMensagens\\ApiMensagens.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\projeto_flutter\\flutter_application_1\\ApiMensagens\\ApiMensagens.csproj",
       "projectName": "ApiMensagens",
-      "projectPath": "C:\\Users\\Administrator\\Desktop\\projeto_flutter\\ApiMensagens\\ApiMensagens.csproj",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\projeto_flutter\\flutter_application_1\\ApiMensagens\\ApiMensagens.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrator\\Desktop\\projeto_flutter\\ApiMensagens\\obj\\",
+      "outputPath": "C:\\Users\\Administrator\\Desktop\\projeto_flutter\\flutter_application_1\\ApiMensagens\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
