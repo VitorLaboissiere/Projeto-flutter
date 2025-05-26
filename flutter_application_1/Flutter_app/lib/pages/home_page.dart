@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'mensagens_page.dart'; // Importe a página de Mensagens
+import 'mensagens_page.dart';
 import 'configuracoes_page.dart';
 import 'relatorios_page.dart';
 import 'filas_page.dart';
+import '../services/api_service.dart';
+
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key}); // Remove o parâmetro isDarkMode aqui
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -13,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   bool isSidebarOpen = false;
-  bool isDarkMode = false; // Estado do tema agora é gerenciado aqui
+  bool isDarkMode = false;
 
   void toggleSidebar() {
     setState(() {
@@ -21,7 +23,7 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  void toggleDarkMode() { // Adicionado função para alternar o tema
+  void toggleDarkMode() {
     setState(() {
       isDarkMode = !isDarkMode;
     });
@@ -30,22 +32,21 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2), // Cor de fundo alterável
+      backgroundColor: isDarkMode ? const Color(0xFF2C3E50) : const Color(0xFF6084A2),
       body: Stack(
         children: [
           Row(
             children: [
-              // Sidebar condicional para evitar erro de renderização
               if (isSidebarOpen)
                 ClipRect(
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     width: isSidebarOpen ? 250 : 0,
-                    color: isDarkMode ? const Color(0xFF1A2C38) : const Color(0xFF0C4474), // Cor do sidebar alterável
+                    color: isDarkMode ? const Color(0xFF1A2C38) : const Color(0xFF0C4474),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 50), // Espaçamento no topo do menu
+                        const SizedBox(height: 50),
                         menuButton("Mensagens", Icons.message),
                         menuButton("Configurações", Icons.settings),
                         menuButton("Relatórios", Icons.analytics),
@@ -54,7 +55,6 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-              // Conteúdo principal
               Expanded(
                 child: GestureDetector(
                   onTap: () {
@@ -91,7 +91,6 @@ class HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          // Botão de menu
           Positioned(
             top: 20,
             left: 20,
@@ -100,7 +99,6 @@ class HomePageState extends State<HomePage> {
               onPressed: toggleSidebar,
             ),
           ),
-          // Botão de tema (adicionado)
           Positioned(
             top: 20,
             right: 20,
@@ -118,7 +116,6 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  // Função para criar botões de menu lateral
   Widget menuButton(String title, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -165,7 +162,6 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  // Função para criar botões de ação no centro
   Widget actionButton(String title, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -181,7 +177,15 @@ class HomePageState extends State<HomePage> {
             ),
             elevation: 5,
           ),
-          onPressed: () {},
+          onPressed: () {
+            if (title == "Enviar mensagens") {
+              _enviarMensagem();
+            } else if (title == "Testar conexão") {
+              // Lógica para testar conexão
+            } else if (title == "Verificar envio de mensagens") {
+              // Lógica para verificar envio
+            }
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -193,5 +197,32 @@ class HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> _enviarMensagem() async {
+    try {
+      await ApiService.enviarMensagem(
+        queueId: "SEU_QUEUE_ID",
+        apiKey: "SUA_API_KEY",
+        number: "SEU_NUMERO",
+        clientId: "SEU_CLIENT_ID",
+        text: "SUA_MENSAGEM",
+        hidden: false,
+      );
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Mensagem enviada com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao enviar mensagem: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

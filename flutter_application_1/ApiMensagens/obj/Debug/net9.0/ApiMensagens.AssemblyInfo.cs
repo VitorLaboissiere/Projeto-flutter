@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiMensagens")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+851ba51dda212cddfef013c063c2a60d16d292d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e25ba73c9e99080d6150b2728c5cbf8ebeb96547")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiMensagens")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiMensagens")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
